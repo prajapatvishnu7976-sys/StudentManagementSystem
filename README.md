@@ -56,3 +56,51 @@ A modern, responsive web-based Student Management System with a professional dar
 - **Storage:** Browser LocalStorage
 
 ## 📁 Project Structure
+StudentManagementWeb/
+├── index.html # Dashboard
+├── students.html # Student Management
+├── courses.html # Course Management
+├── enrollments.html # Enrollment Management
+├── css/
+│ └── style.css # All Styles
+└── js/
+├── app.js # Core Logic
+├── students.js # Student Operations
+├── courses.js # Course Operations
+└── enrollments.js # Enrollment Operations
+
+
+## 🚀 Quick Start
+
+### Local Setup
+1. Download/Clone the repository
+2. Open `index.html` in your browser
+3. System auto-initializes with sample data
+4. No server required!
+
+### GitHub Pages Deployment
+1. Fork this repository
+2. Go to Settings → Pages
+3. Select `main` branch
+4. Your site will be live at: `https://yourusername.github.io/StudentManagementSystem/`
+
+## 💻 Browser Support
+
+- ✅ Chrome (90+)
+- ✅ Firefox (88+)
+- ✅ Edge (90+)
+- ✅ Safari (14+)
+
+## 📊 Sample Data
+
+The system includes sample data:
+- 5 Students
+- 5 Courses
+- 8 Enrollments
+
+## 🔧 Reset Database
+
+Open browser console (F12) and run:
+```javascript
+localStorage.clear();
+location.reload();
