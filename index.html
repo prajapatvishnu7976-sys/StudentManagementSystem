@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- SPLASH -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-bg">
+            <div class="splash-circle"></div>
+            <div class="splash-circle"></div>
+            <div class="splash-circle"></div>
+        </div>
+        <div class="splash-content">
+            <div class="splash-logo-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1 class="splash-title">Student Management</h1>
+            <p class="splash-subtitle">Enterprise System</p>
+            <div class="splash-loader">
+                <div class="splash-loader-dot"></div>
+                <div class="splash-loader-dot"></div>
+                <div class="splash-loader-dot"></div>
+                <div class="splash-loader-dot"></div>
+                <div class="splash-loader-dot"></div>
+            </div>
+            <div class="splash-progress">
+                <div class="splash-progress-bar"></div>
+            </div>
+            <p class="splash-text" id="splashText">Initializing...</p>
+            <div class="splash-version">
+                <i class="fas fa-code-branch"></i>
+                <span>Version 2.0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTICLES -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Student Management System</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-home me-1"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="students.html"><i class="fas fa-user-graduate me-1"></i>Students</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html"><i class="fas fa-book me-1"></i>Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="enrollments.html"><i class="fas fa-clipboard-list me-1"></i>Enrollments</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="container-fluid py-4 px-4" id="mainContent" style="display: none;">
+        
+        <!-- Banner -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="welcome-banner card animate-card">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard Overview</h2>
+                                <p class="mb-0"><i class="fas fa-chart-line me-1"></i>Real-time monitoring of your system</p>
+                            </div>
+                            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <span class="badge px-3 py-2"><i class="fas fa-calendar-alt me-1"></i><span id="currentDate"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card card h-100 animate-card" style="animation-delay:0.1s">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>Total Students</p>
+                                <h3 id="totalStudents">0</h3>
+                                <small id="activeStudentsText"><i class="fas fa-check-circle me-1 text-success"></i>0 Active</small>
+                            </div>
+                            <div class="stat-icon bg-primary"><i class="fas fa-user-graduate"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><a href="students.html">View All <i class="fas fa-arrow-right ms-1"></i></a></div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card card h-100 animate-card" style="animation-delay:0.2s">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>Total Courses</p>
+                                <h3 id="totalCourses">0</h3>
+                                <small id="totalCreditsText"><i class="fas fa-book me-1 text-info"></i>0 Credits</small>
+                            </div>
+                            <div class="stat-icon bg-success"><i class="fas fa-book-open"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><a href="courses.html">View All <i class="fas fa-arrow-right ms-1"></i></a></div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card card h-100 animate-card" style="animation-delay:0.3s">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>Enrollments</p>
+                                <h3 id="totalEnrollments">0</h3>
+                                <small id="enrolledText"><i class="fas fa-users me-1 text-warning"></i>This Semester</small>
+                            </div>
+                            <div class="stat-icon bg-warning"><i class="fas fa-clipboard-list"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><a href="enrollments.html">View All <i class="fas fa-arrow-right ms-1"></i></a></div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card card h-100 animate-card" style="animation-delay:0.4s">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p>Graded</p>
+                                <h3 id="gradedEnrollments">0</h3>
+                                <small id="pendingGradeText"><i class="fas fa-clock me-1 text-danger"></i>0 Pending</small>
+                            </div>
+                            <div class="stat-icon bg-danger"><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                    <div class="card-footer"><a href="enrollments.html">View Grades <i class="fas fa-arrow-right ms-1"></i></a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="card h-100 animate-card" style="animation-delay:0.5s">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-users me-2 text-primary"></i>Recent Students</h5>
+                        <span class="badge bg-primary" id="studentCount">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead><tr><th>Roll No</th><th>Name</th><th>Email</th><th>Status</th></tr></thead>
+                                <tbody id="recentStudentsTable">
+                                    <tr><td colspan="4" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="students.html" class="btn btn-outline-primary btn-sm w-100"><i class="fas fa-users me-1"></i>View All Students</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100 animate-card" style="animation-delay:0.6s">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-book me-2 text-success"></i>Active Courses</h5>
+                        <span class="badge bg-success" id="courseCount">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead><tr><th>Code</th><th>Course</th><th>Instructor</th><th>Enrolled</th></tr></thead>
+                                <tbody id="popularCoursesTable">
+                                    <tr><td colspan="4" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="courses.html" class="btn btn-outline-success btn-sm w-100"><i class="fas fa-book me-1"></i>View All Courses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollments -->
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="card animate-card" style="animation-delay:0.7s">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-clipboard-list me-2 text-warning"></i>Recent Enrollments</h5>
+                        <span class="badge bg-warning" id="enrollmentCount">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead><tr><th>ID</th><th>Student</th><th>Course</th><th>Date</th><th>Grade</th><th>Status</th></tr></thead>
+                                <tbody id="recentEnrollmentsTable">
+                                    <tr><td colspan="6" class="text-center py-4"><i class="fas fa-spinner fa-spin me-2"></i>Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="enrollments.html" class="btn btn-outline-warning btn-sm w-100"><i class="fas fa-clipboard-list me-1"></i>View All Enrollments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="card animate-card" style="animation-delay:0.8s">
+                    <div class="card-header"><h5><i class="fas fa-bolt me-2 text-warning"></i>Quick Actions</h5></div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-lg-3 col-md-6"><a href="students.html" class="btn btn-primary w-100 py-3"><i class="fas fa-user-plus fa-lg d-block mb-2"></i>Add Student</a></div>
+                            <div class="col-lg-3 col-md-6"><a href="courses.html" class="btn btn-success w-100 py-3"><i class="fas fa-book-medical fa-lg d-block mb-2"></i>Add Course</a></div>
+                            <div class="col-lg-3 col-md-6"><a href="enrollments.html" class="btn btn-warning w-100 py-3"><i class="fas fa-user-check fa-lg d-block mb-2"></i>New Enrollment</a></div>
+                            <div class="col-lg-3 col-md-6"><button class="btn btn-info w-100 py-3" onclick="generateReport()"><i class="fas fa-file-alt fa-lg d-block mb-2"></i>Generate Report</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card text-center animate-card" style="animation-delay:0.9s">
+                    <div class="card-body py-4">
+                        <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                        <h6>Database</h6>
+                        <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Connected</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center animate-card" style="animation-delay:1s">
+                    <div class="card-body py-4">
+                        <i class="fas fa-server fa-3x text-success mb-3"></i>
+                        <h6>Server</h6>
+                        <span class="badge bg-success"><i class="fas fa-signal me-1"></i>Online</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center animate-card" style="animation-delay:1.1s">
+                    <div class="card-body py-4">
+                        <i class="fas fa-shield-alt fa-3x text-warning mb-3"></i>
+                        <h6>Security</h6>
+                        <span class="badge bg-success"><i class="fas fa-lock me-1"></i>Secured</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center py-4">
+                        <div class="mb-3">
+                            <span class="badge bg-primary mx-1"><i class="fab fa-java me-1"></i>Java</span>
+                            <span class="badge bg-info mx-1"><i class="fas fa-database me-1"></i>SQLite</span>
+                            <span class="badge bg-warning mx-1"><i class="fab fa-html5 me-1"></i>HTML5</span>
+                            <span class="badge bg-danger mx-1"><i class="fab fa-css3-alt me-1"></i>CSS3</span>
+                            <span class="badge bg-success mx-1"><i class="fab fa-js me-1"></i>JavaScript</span>
+                        </div>
+                        <p class="mb-0"><i class="fas fa-code me-1"></i>Student Management System v2.0 | Made with ❤️ | © 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/students.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/enrollments.js"></script>
+    
+    <script>
+        // Splash
+        document.addEventListener('DOMContentLoaded', function() {
+            const txt = document.getElementById('splashText');
+            const msgs = ['Initializing...', 'Connecting Database...', 'Loading Data...', 'Preparing...', 'Ready!'];
+            let i = 0;
+            const int = setInterval(() => { if (i < msgs.length) txt.textContent = msgs[i++]; }, 450);
+            setTimeout(() => {
+                clearInterval(int);
+                document.getElementById('splashScreen').classList.add('fade-out');
+                setTimeout(() => {
+                    document.getElementById('splashScreen').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    document.getElementById('mainContent').classList.add('fade-in');
+                    updateDashboard();
+                }, 500);
+            }, 2700);
+        });
+
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
+        window.addEventListener('scroll', () => document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50));
+
+        function updateDashboard() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const courses = JSON.parse(localStorage.getItem('courses')) || [];
+            const enrollments = JSON.parse(localStorage.getItem('enrollments')) || [];
+            const active = students.filter(s => s.status === 'ACTIVE').length;
+            const graded = enrollments.filter(e => e.grade && e.grade !== 'N/A').length;
+            const credits = courses.reduce((s, c) => s + (c.credits || 0), 0);
+
+            animateNum('totalStudents', students.length);
+            animateNum('totalCourses', courses.length);
+            animateNum('totalEnrollments', enrollments.length);
+            animateNum('gradedEnrollments', graded);
+
+            document.getElementById('activeStudentsText').innerHTML = `<i class="fas fa-check-circle me-1 text-success"></i>${active} Active`;
+            document.getElementById('totalCreditsText').innerHTML = `<i class="fas fa-book me-1 text-info"></i>${credits} Credits`;
+            document.getElementById('pendingGradeText').innerHTML = `<i class="fas fa-clock me-1 text-danger"></i>${enrollments.length - graded} Pending`;
+            document.getElementById('studentCount').textContent = students.length;
+            document.getElementById('courseCount').textContent = courses.length;
+            document.getElementById('enrollmentCount').textContent = enrollments.length;
+
+            // Students
+            const rs = [...students].reverse().slice(0, 5);
+            document.getElementById('recentStudentsTable').innerHTML = rs.length ? rs.map(s => `
+                <tr>
+                    <td><strong>${s.rollNumber}</strong></td>
+                    <td>${s.firstName} ${s.lastName}</td>
+                    <td><small>${s.email}</small></td>
+                    <td><span class="badge bg-${s.status==='ACTIVE'?'success':'secondary'}">${s.status}</span></td>
+                </tr>
+            `).join('') : `<tr><td colspan="4">No students. <a href="students.html">Add one!</a></td></tr>`;
+
+            // Courses
+            const sc = [...courses].sort((a,b) => (b.enrolledStudents||0) - (a.enrolledStudents||0)).slice(0, 5);
+            document.getElementById('popularCoursesTable').innerHTML = sc.length ? sc.map(c => {
+                const p = c.maxStudents ? Math.round((c.enrolledStudents/c.maxStudents)*100) : 0;
+                const cl = p > 80 ? 'danger' : p > 50 ? 'warning' : 'success';
+                return `
+                    <tr>
+                        <td><strong>${c.courseCode}</strong></td>
+                        <td>${c.courseName}</td>
+                        <td><small>${c.instructor}</small></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="progress flex-grow-1 me-2" style="height:5px;width:50px;">
+                                    <div class="progress-bar bg-${cl}" style="width:${p}%"></div>
+                                </div>
+                                <small>${c.enrolledStudents||0}/${c.maxStudents}</small>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="4">No courses. <a href="courses.html">Add one!</a></td></tr>`;
+
+            // Enrollments
+            const re = [...enrollments].reverse().slice(0, 5);
+            document.getElementById('recentEnrollmentsTable').innerHTML = re.length ? re.map(e => {
+                const st = students.find(s => s.studentId === e.studentId) || {};
+                const cr = courses.find(c => c.courseId === e.courseId) || {};
+                const gc = e.grade==='N/A'?'secondary':e.grade?.startsWith('A')?'success':e.grade?.startsWith('B')?'info':e.grade?.startsWith('C')?'warning':'danger';
+                const stc = e.status==='ENROLLED'?'success':e.status==='COMPLETED'?'primary':'danger';
+                return `
+                    <tr>
+                        <td><strong>#${e.enrollmentId}</strong></td>
+                        <td><strong>${st.rollNumber||'N/A'}</strong><small>${st.firstName||''} ${st.lastName||''}</small></td>
+                        <td><strong>${cr.courseCode||'N/A'}</strong><small>${cr.courseName||''}</small></td>
+                        <td><small>${fmtDate(e.enrollmentDate)}</small></td>
+                        <td><span class="badge bg-${gc}">${e.grade||'N/A'}</span></td>
+                        <td><span class="badge bg-${stc}">${e.status}</span></td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="6">No enrollments. <a href="enrollments.html">Create one!</a></td></tr>`;
+        }
+
+        function animateNum(id, t) {
+            const el = document.getElementById(id);
+            let c = 0, s = t / 25;
+            const i = setInterval(() => { c += s; if (c >= t) { el.textContent = t; clearInterval(i); } else el.textContent = Math.floor(c); }, 25);
+        }
+
+        function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : 'N/A'; }
+
+        function generateReport() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const courses = JSON.parse(localStorage.getItem('courses')) || [];
+            const enrollments = JSON.parse(localStorage.getItem('enrollments')) || [];
+            const report = `STUDENT MANAGEMENT SYSTEM REPORT\n${'='.repeat(50)}\nGenerated: ${new Date().toLocaleString()}\n\nSUMMARY\n${'-'.repeat(30)}\nStudents: ${students.length} | Active: ${students.filter(s=>s.status==='ACTIVE').length}\nCourses: ${courses.length} | Enrollments: ${enrollments.length}\nGraded: ${enrollments.filter(e=>e.grade!=='N/A').length}\n\nSTUDENTS\n${'-'.repeat(30)}\n${students.map(s=>`${s.rollNumber} | ${s.firstName} ${s.lastName} | ${s.status}`).join('\n')}\n\nCOURSES\n${'-'.repeat(30)}\n${courses.map(c=>`${c.courseCode} | ${c.courseName} | ${c.enrolledStudents}/${c.maxStudents}`).join('\n')}`;
+            const blob = new Blob([report], {type:'text/plain'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Report_${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            showToast('Report downloaded!', 'success');
+        }
+
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) updateDashboard(); });
+    </script>
+</body>
+</html>

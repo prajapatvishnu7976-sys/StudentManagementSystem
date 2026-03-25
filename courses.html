@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management - Courses</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-graduation-cap me-2"></i>
+                Student Management System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="students.html">
+                            <i class="fas fa-user-graduate me-1"></i>Students
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="courses.html">
+                            <i class="fas fa-book me-1"></i>Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="enrollments.html">
+                            <i class="fas fa-clipboard-list me-1"></i>Enrollments
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-1">
+                                <i class="fas fa-book text-success me-2"></i>
+                                Course Management
+                            </h4>
+                            <p class="text-muted mb-0">Add, view, edit and manage course records</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-success me-2" onclick="exportCoursesToCSV()">
+                                <i class="fas fa-download me-1"></i>Export CSV
+                            </button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                                <i class="fas fa-plus me-1"></i>Add Course
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-primary text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-book fa-2x mb-2"></i>
+                        <h3 class="mb-1" id="statTotalCourses">0</h3>
+                        <small>Total Courses</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-success text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                        <h3 class="mb-1" id="statActiveCourses">0</h3>
+                        <small>Active Courses</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-info text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chair fa-2x mb-2"></i>
+                        <h3 class="mb-1" id="statTotalSeats">0</h3>
+                        <small>Total Seats</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-warning text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-check fa-2x mb-2"></i>
+                        <h3 class="mb-1" id="statFilledSeats">0</h3>
+                        <small>Filled Seats</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="searchCourseInput" 
+                                           placeholder="Search by course code, name, instructor..." 
+                                           onkeyup="filterCourses()">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="courseStatusFilter" onchange="filterCourses()">
+                                    <option value="">All Status</option>
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="creditsFilter" onchange="filterCourses()">
+                                    <option value="">All Credits</option>
+                                    <option value="1">1 Credit</option>
+                                    <option value="2">2 Credits</option>
+                                    <option value="3">3 Credits</option>
+                                    <option value="4">4 Credits</option>
+                                    <option value="5">5 Credits</option>
+                                    <option value="6">6 Credits</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Table -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="coursesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Course Name</th>
+                                        <th>Instructor</th>
+                                        <th>Credits</th>
+                                        <th>Enrollment</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="coursesTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- No Results -->
+                        <div id="noCoursesResults" class="text-center py-5" style="display: none;">
+                            <i class="fas fa-book fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No courses found</h5>
+                            <p class="text-muted">Try adjusting your search or filter criteria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Course Modal -->
+    <div class="modal fade" id="addCourseModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-book-medical me-2"></i>Add New Course
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCourseForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Course Code <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="addCourseCode" 
+                                       placeholder="e.g., CS301" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Course Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="addCourseName" 
+                                       placeholder="e.g., Web Development" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Instructor <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="addInstructor" 
+                                       placeholder="e.g., Dr. John Smith" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Credits <span class="text-danger">*</span></label>
+                                <select class="form-select" id="addCredits" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Max Students <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="addMaxStudents" 
+                                       value="50" min="1" max="200" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="addCourseStatus" required>
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" id="addCourseDescription" rows="3" 
+                                          placeholder="Enter course description"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitAddCourse()">
+                        <i class="fas fa-save me-1"></i>Save Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Course Modal -->
+    <div class="modal fade" id="viewCourseModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-book me-2"></i>Course Details
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="viewCourseContent">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Course Modal -->
+    <div class="modal fade" id="editCourseModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Edit Course
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCourseForm">
+                        <input type="hidden" id="editCourseId">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Course Code</label>
+                                <input type="text" class="form-control" id="editCourseCode" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Course Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editCourseName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Instructor <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editInstructor" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Credits <span class="text-danger">*</span></label>
+                                <select class="form-select" id="editCredits" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Max Students <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="editMaxStudents" 
+                                       min="1" max="200" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="editCourseStatus" required>
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" id="editCourseDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditCourse()">
+                        <i class="fas fa-save me-1"></i>Update Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteCourseModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Confirm Delete
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="deleteCourseId">
+                    <p class="mb-0">Are you sure you want to delete this course?</p>
+                    <p class="text-danger"><strong>This action cannot be undone!</strong></p>
+                    <p class="text-warning mb-0">Note: Courses with enrolled students cannot be deleted.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="submitDeleteCourse()">
+                        <i class="fas fa-trash me-1"></i>Delete Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+    <script src="js/students.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/enrollments.js"></script>
+    
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCourses();
+            updateCourseStats();
+        });
+
+        // Load all courses
+        function loadCourses() {
+            const courses = getAllCourses();
+            displayCourses(courses);
+        }
+
+        // Display courses in table
+        function displayCourses(courses) {
+            const tbody = document.getElementById('coursesTableBody');
+            const noResults = document.getElementById('noCoursesResults');
+            
+            if (courses.length === 0) {
+                tbody.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            tbody.innerHTML = courses.map(c => displayCourseInTable(c)).join('');
+        }
+
+        // Update statistics
+        function updateCourseStats() {
+            const stats = getCourseStats();
+            document.getElementById('statTotalCourses').textContent = stats.total;
+            document.getElementById('statActiveCourses').textContent = stats.active;
+            document.getElementById('statTotalSeats').textContent = stats.totalSeats;
+            document.getElementById('statFilledSeats').textContent = stats.filledSeats;
+        }
+
+        // Filter courses
+        function filterCourses() {
+            const searchTerm = document.getElementById('searchCourseInput').value.toLowerCase();
+            const statusFilter = document.getElementById('courseStatusFilter').value;
+            const creditsFilter = document.getElementById('creditsFilter').value;
+            
+            let courses = getAllCourses();
+            
+            // Apply search
+            if (searchTerm) {
+                courses = courses.filter(c => 
+                    c.courseCode.toLowerCase().includes(searchTerm) ||
+                    c.courseName.toLowerCase().includes(searchTerm) ||
+                    c.instructor.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Apply status filter
+            if (statusFilter) {
+                courses = courses.filter(c => c.status === statusFilter);
+            }
+            
+            // Apply credits filter
+            if (creditsFilter) {
+                courses = courses.filter(c => c.credits === parseInt(creditsFilter));
+            }
+            
+            displayCourses(courses);
+        }
+
+        // View course
+        function viewCourse(courseId) {
+            const course = getCourseById(courseId);
+            if (!course) return;
+            
+            const enrolledStudents = getCourseStudentsWithDetails(courseId);
+            const enrollmentPercent = Math.round((course.enrolledStudents / course.maxStudents) * 100);
+            
+            const content = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-success"><i class="fas fa-book me-2"></i>Course Information</h6>
+                        <table class="table table-sm">
+                            <tr><td><strong>Course Code:</strong></td><td>${course.courseCode}</td></tr>
+                            <tr><td><strong>Course Name:</strong></td><td>${course.courseName}</td></tr>
+                            <tr><td><strong>Instructor:</strong></td><td>${course.instructor}</td></tr>
+                            <tr><td><strong>Credits:</strong></td><td><span class="badge bg-primary">${course.credits}</span></td></tr>
+                            <tr><td><strong>Description:</strong></td><td>${course.description || 'N/A'}</td></tr>
+                            <tr><td><strong>Status:</strong></td><td><span class="badge bg-${course.status === 'ACTIVE' ? 'success' : 'secondary'}">${course.status}</span></td></tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-success"><i class="fas fa-users me-2"></i>Enrollment Information</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Enrollment Progress</label>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar ${enrollmentPercent > 80 ? 'bg-danger' : enrollmentPercent > 50 ? 'bg-warning' : 'bg-success'}" 
+                                     style="width: ${enrollmentPercent}%">
+                                    ${course.enrolledStudents}/${course.maxStudents} (${enrollmentPercent}%)
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <tr><td><strong>Max Students:</strong></td><td>${course.maxStudents}</td></tr>
+                            <tr><td><strong>Enrolled:</strong></td><td>${course.enrolledStudents}</td></tr>
+                            <tr><td><strong>Available Seats:</strong></td><td>${course.maxStudents - course.enrolledStudents}</td></tr>
+                        </table>
+                        
+                        <h6 class="text-success mt-3"><i class="fas fa-user-graduate me-2"></i>Enrolled Students</h6>
+                        ${enrolledStudents.length > 0 ? `
+                            <div style="max-height: 200px; overflow-y: auto;">
+                                <ul class="list-group list-group-flush">
+                                    ${enrolledStudents.map(s => `
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                            <span><strong>${s.rollNumber}</strong> - ${s.studentName}</span>
+                                            <span class="badge bg-info">${s.grade}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        ` : '<p class="text-muted">No students enrolled yet</p>'}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('viewCourseContent').innerHTML = content;
+            new bootstrap.Modal(document.getElementById('viewCourseModal')).show();
+        }
+
+        // Edit course
+        function editCourse(courseId) {
+            const course = getCourseById(courseId);
+            if (!course) return;
+            
+            document.getElementById('editCourseId').value = course.courseId;
+            document.getElementById('editCourseCode').value = course.courseCode;
+            document.getElementById('editCourseName').value = course.courseName;
+            document.getElementById('editInstructor').value = course.instructor;
+            document.getElementById('editCredits').value = course.credits;
+            document.getElementById('editMaxStudents').value = course.maxStudents;
+            document.getElementById('editCourseDescription').value = course.description || '';
+            document.getElementById('editCourseStatus').value = course.status;
+            
+            new bootstrap.Modal(document.getElementById('editCourseModal')).show();
+        }
+
+        // Confirm delete course
+        function confirmDeleteCourse(courseId) {
+            document.getElementById('deleteCourseId').value = courseId;
+            new bootstrap.Modal(document.getElementById('deleteCourseModal')).show();
+        }
+
+        // Submit add course
+        function submitAddCourse() {
+            const courseData = {
+                courseCode: document.getElementById('addCourseCode').value.trim().toUpperCase(),
+                courseName: document.getElementById('addCourseName').value.trim(),
+                instructor: document.getElementById('addInstructor').value.trim(),
+                credits: parseInt(document.getElementById('addCredits').value),
+                maxStudents: parseInt(document.getElementById('addMaxStudents').value),
+                description: document.getElementById('addCourseDescription').value.trim(),
+                status: document.getElementById('addCourseStatus').value
+            };
+            
+            if (!validateCourseForm(courseData)) return;
+            
+            if (addCourse(courseData)) {
+                bootstrap.Modal.getInstance(document.getElementById('addCourseModal')).hide();
+                document.getElementById('addCourseForm').reset();
+                loadCourses();
+                updateCourseStats();
+            }
+        }
+
+        // Submit edit course
+        function submitEditCourse() {
+            const courseId = document.getElementById('editCourseId').value;
+            const courseData = {
+                courseName: document.getElementById('editCourseName').value.trim(),
+                instructor: document.getElementById('editInstructor').value.trim(),
+                credits: parseInt(document.getElementById('editCredits').value),
+                maxStudents: parseInt(document.getElementById('editMaxStudents').value),
+                description: document.getElementById('editCourseDescription').value.trim(),
+                status: document.getElementById('editCourseStatus').value
+            };
+            
+            if (updateCourse(courseId, courseData)) {
+                bootstrap.Modal.getInstance(document.getElementById('editCourseModal')).hide();
+                loadCourses();
+                updateCourseStats();
+            }
+        }
+
+        // Submit delete course
+        function submitDeleteCourse() {
+            const courseId = document.getElementById('deleteCourseId').value;
+            
+            if (deleteCourse(parseInt(courseId))) {
+                bootstrap.Modal.getInstance(document.getElementById('deleteCourseModal')).hide();
+                loadCourses();
+                updateCourseStats();
+            }
+        }
+    </script>
+</body>
+</html>
