@@ -86,7 +86,7 @@ StudentManagementWeb/
 
 ## 💻 Browser Support
 
-- ✅ Chrome (90+)
+- ✅ Chrome (91+)
 - ✅ Firefox (88+)
 - ✅ Edge (90+)
 - ✅ Safari (14+)
